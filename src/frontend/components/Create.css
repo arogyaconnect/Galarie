@@ -49,25 +49,57 @@ form .form-control:focus {
     outline: none;
 }
 
-/* Button */
-button.btn-primary {
-    background: #007bff;
+/* Create.css */
+
+.gradient-button {
+    background: linear-gradient(45deg, #6a5acd, #8a2be2, #4169e1, #7b68ee, #483d8b);
+    background-size: 200% 200%;
+    animation: gradientAnimation 4s ease infinite;
     border: none;
-    border-radius: 10px;
-    padding: 1rem;
-    font-size: 1rem;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
     font-weight: bold;
-    transition: background 0.3s ease-in-out;
-}
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .gradient-button:hover {
+    background: linear-gradient(270deg, #1e90ff, #6495ed, #4682b4, #00bfff, #5f9ea0);
+    background-size: 400% 400%;
+    animation: gradientHoverAnimation 8s ease infinite;
+  }
 
-button.btn-primary:hover {
-    background: #0056b3;
-}
-
-button.btn-primary:focus {
-    background: #0056b3;
-    outline: none;
-}
+  @keyframes gradientHoverAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .gradient-button:disabled {
+    background: #ddd;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
 
 /* Headings */
 h2, h3 {

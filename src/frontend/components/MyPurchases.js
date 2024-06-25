@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ethers } from "ethers"
 import { Row, Col, Card } from 'react-bootstrap'
+import loaderGif from './loader.gif';
 
 export default function MyPurchases({ marketplace, nft, account }) {
   const [loading, setLoading] = useState(true)
@@ -38,10 +39,10 @@ export default function MyPurchases({ marketplace, nft, account }) {
     loadPurchasedItems()
   }, [])
   if (loading) return (
-    <main style={{ padding: "1rem 0" }}>
-      <h2>Loading...</h2>
+    <main style={{ padding: "1rem 0", textAlign: 'center' }}>
+      <img src={loaderGif} alt="Loading..." style={{ width: '100px', height: '100px' }} />
     </main>
-  )
+  );
   return (
     <div className="flex justify-center">
       {purchases.length > 0 ?
