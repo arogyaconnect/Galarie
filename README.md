@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NFT Marketplace
 
 ## Technology Stack & Tools
@@ -46,3 +47,7 @@ License
 ----
 MIT
 
+=======
+# Galarie
+Galarie, is a NFT Blockchain based online marketplace for artisans
+>>>>>>> 44b466689c17cceedc50a3e18951dd6eb328cd68
