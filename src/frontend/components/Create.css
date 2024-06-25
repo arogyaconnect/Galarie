@@ -1,0 +1,92 @@
+/* Base Styles */
+body {
+    background: linear-gradient(135deg, #DEF3FD, #F0DEFD);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Ce
+/* Container */
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 50px); /* Assuming navbar height is 50px */
+    padding-top: 50px; /* Adjust based on the actual navbar height */
+}
+
+/* Main Form Block */
+.content {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    width: 100%;
+    margin-top: -200px; /* Adjust this to lessen the gap */
+}
+
+/* Form Control */
+form .form-control {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    font-size: 1rem;
+}
+
+form .form-control::placeholder {
+    color: #ddd;
+}
+
+form .form-control:focus {
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+}
+
+/* Button */
+button.btn-primary {
+    background: #007bff;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+
+button.btn-primary:hover {
+    background: #0056b3;
+}
+
+button.btn-primary:focus {
+    background: #0056b3;
+    outline: none;
+}
+
+/* Headings */
+h2, h3 {
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Flex and Grid */
+.d-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+}
