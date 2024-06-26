@@ -1,30 +1,19 @@
 import { useState, useEffect } from 'react';
 import { ethers } from "ethers";
-import { Row, Col, Card } from 'react-bootstrap';
 import './MyListedItems.css';
 import loaderGif from './loader.gif';  // Make sure this path is correct
 
 function renderSoldItems(items) {
   return (
     <>
-      <h2>Sold</h2>
-      <Row xs={1} md={2} lg={4} className="g-4 py-3">
+      <h2 className="section-title">Sold</h2>
+      <div className="grid">
         {items.map((item, idx) => (
-          <Col key={idx} className="overflow-hidden">
-            <Card className="card-custom">
-              <Card.Img variant="top" src={item.image} />
-              <Card.Footer className="card-footer-custom">
-                <span className="card-text">
-                  For {ethers.utils.formatEther(item.totalPrice)} ETH - Received {ethers.utils.formatEther(item.price)} ETH
-                </span>
-                <span className="buy-button">
-                  <button>Buy</button>
-                </span>
-              </Card.Footer>
-            </Card>
-          </Col>
+          <div key={idx} className="card-custom">
+            <img src={item.image} alt={item.name} className="card-img" />
+          </div>
         ))}
-      </Row>
+      </div>
     </>
   );
 }
@@ -75,30 +64,25 @@ export default function MyListedItems({ marketplace, nft, account }) {
   return (
     <div className="flex justify-center">
       {listedItems.length > 0 ? (
-        <div className="px-5 py-3 container">
-          <h2>Listed</h2>
-          <Row xs={1} md={2} lg={4} className="g-4 py-3">
+        <div className="containerListedItems">
+          <h2 className="section-title">Listed</h2>
+          <div className="grid">
             {listedItems.map((item, idx) => (
-              <Col key={idx} className="overflow-hidden">
-                <Card className="card-custom">
-                  <Card.Img variant="top" src={item.image} />
-                  <Card.Footer className="card-footer-custom">
-                    <span className="card-text">
-                      {ethers.utils.formatEther(item.totalPrice)} ETH
-                    </span>
-                    <span className="buy-button">
-                      <button>Buy</button>
-                    </span>
-                  </Card.Footer>
-                </Card>
-              </Col>
+              <div key={idx} className="card-custom">
+                <img src={item.image} alt={item.name} className="card-img" />
+                <div className="card-footer-custom">
+                  <span className="card-text">
+                    {ethers.utils.formatEther(item.totalPrice)} ETH
+                  </span>
+                </div>
+              </div>
             ))}
-          </Row>
+          </div>
           {soldItems.length > 0 && renderSoldItems(soldItems)}
         </div>
       ) : (
         <main style={{ padding: "1rem 0" }}>
-          <h2>No listed assets</h2>
+          <h2 className="section-title">No listed assets</h2>
         </main>
       )}
     </div>

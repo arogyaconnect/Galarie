@@ -21,14 +21,14 @@ const Create = ({ marketplace, nft }) => {
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJsonToIPFS",
         data: {
-          "name": name,
-          "description": desc,
-          "image": ImgHash
+          name,
+          description: desc,
+          image: ImgHash
         },
         headers: {
-          'pinata_api_key': process.env.REACT_APP_PINATA_API_KEY,
-          'pinata_secret_api_key': process.env.REACT_APP_PINATA_SECRET_API_KEY,
-        },
+          pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+          pinata_secret_api_key: process.env.REACT_APP_PINATA_SECRET_API_KEY
+        }
       });
 
       const tokenURI = `https://gateway.pinata.cloud/ipfs/${resJSON.data.IpfsHash}`;
@@ -39,6 +39,13 @@ const Create = ({ marketplace, nft }) => {
       setIsLoading(false);
     }
   };
+
+  // const apiKey = process.env.REACT_APP_PINATA_API_KEY;
+  // const secretKey = process.env.REACT_APP_PINATA_SECRET_API_KEY;
+
+  // console.log("API Key:", apiKey);
+  // console.log("Secret Key:", secretKey);
+
 
   const sendFileToIPFS = async (e) => {
     e.preventDefault();
@@ -54,10 +61,10 @@ const Create = ({ marketplace, nft }) => {
           url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
           data: formData,
           headers: {
-            'pinata_api_key': process.env.REACT_APP_PINATA_API_KEY,
-            'pinata_secret_api_key': process.env.REACT_APP_PINATA_SECRET_API_KEY,
+            pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+            pinata_secret_api_key: process.env.REACT_APP_PINATA_SECRET_API_KEY,
             "Content-Type": "multipart/form-data"
-          },
+          }
         });
 
         const ImgHash = `https://gateway.pinata.cloud/ipfs/${resFile.data.IpfsHash}`;
