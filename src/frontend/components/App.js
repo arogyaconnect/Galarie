@@ -12,7 +12,43 @@ import { useState } from 'react'
 import { ethers } from "ethers"
 import { Spinner } from 'react-bootstrap'
 
+//Wallets Integraation
+import { Web3OnboardProvider, init } from '@web3-onboard/react'
+import injectedModule from '@web3-onboard/injected-wallets'
+import coinbaseModule from '@web3-onboard/coinbase'
+import ConnectWallet from './ConnectWallet'
+
 import './App.css';
+
+const INFURA_KEY = 'cd1f481035af45bd84d3b7589667d7e9'
+const injected = injectedModule()
+const coinbase = coinbaseModule()
+
+
+const wallets = [injected, coinbase]
+
+const chains = [{
+  id: '0x1',
+  token: 'ETH',
+  label: 'Ethereum Mainnet',
+  rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
+}]
+
+const appMetadata = {
+  name: "Connect Wallet Example",
+  icon: "<svg>My App Icon</svg>",
+  description: "Example showcasing how to connect a wallet.",
+  recommendedInjectedWallets: [
+    { name: "MetaMask", url: "https://metamask.io" },
+    { name: "Coinbase", url: "https://wallet.coinbase.com/" }
+  ]
+}
+
+const web3Onboard = init({
+  wallets,
+  chains,
+  appMetadata
+})
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -48,6 +84,8 @@ function App() {
   }
 
   return (
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <ConnectWallet />
     <BrowserRouter>
       <div className="App">
         <>
@@ -78,6 +116,7 @@ function App() {
         </div>
       </div>
     </BrowserRouter>
+    </Web3OnboardProvider>
 
   );
 }
