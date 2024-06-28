@@ -89,14 +89,18 @@ const Create = ({ marketplace, nft }) => {
       const listingPrice = ethers.utils.parseEther(price.toString());
       await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
       // Show success notification
-      toast.success("NFT Listed Successfully!");
+      toast.success("NFT Listed Successfully!",{
+        position: "top-center"
+      });
       setIsSuccess(true);
       setTimeout(() => {
         resetForm();
       }, 2000); // Display success for 2 seconds before resetting the form
     } catch (error) {
       console.log("Minting/Listing: ", error);
-      toast.error("Failed to list NFT.");
+      toast.error("Failed to list NFT.",{
+        position: "top-center"
+      });
       setIsLoading(false);
     }
   };

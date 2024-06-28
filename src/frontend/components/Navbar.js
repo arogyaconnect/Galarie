@@ -4,9 +4,12 @@ import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import market from './market.png'; // Make sure this path is correct
 import logo from './logo.png'; // Add your logo image here
 
+
+
+
 const Navigation = ({ web3Handler, account }) => {
     return (
-        <Navbar expand="lg" bg="secondary" variant="dark">
+        <Navbar expand="lg" bg="secondary" variant="dark" className="custom-navbar">
             <Container>
                 <Navbar.Brand href="/">
                     <img src={logo} width="100" height="40" className="" alt="Logo" /> {/* Adjust width and height as needed */}
