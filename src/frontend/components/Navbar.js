@@ -1,10 +1,19 @@
 import './Navbar.css';
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Button, Container } from 'react-bootstrap';
-import market from './market.png'; // Make sure this path is correct
+import { useConnectWallet } from '@web3-onboard/react';
 import logo from './logo.png'; // Add your logo image here
 
 const Navigation = ({ web3Handler, account }) => {
+    const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+
+    const handleConnect = async () => {
+        const [connectedWallet] = await connect();
+        if (connectedWallet) {
+            await web3Handler(connectedWallet);
+        }
+    };
+
     return (
         <Navbar expand="lg" bg="secondary" variant="dark">
             <Container>
@@ -31,7 +40,9 @@ const Navigation = ({ web3Handler, account }) => {
                                 </Button>
                             </Nav.Link>
                         ) : (
-                            <Button onClick={web3Handler} variant="outline-light">Connect Wallet</Button>
+                            <Button onClick={handleConnect} variant="outline-light" disabled={connecting}>
+                                {connecting ? 'Connecting...' : 'Connect Wallet'}
+                            </Button>
                         )}
                     </Nav>
                 </Navbar.Collapse>
