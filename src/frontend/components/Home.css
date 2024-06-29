@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
-body {
-  background: linear-gradient(300deg, #A41C84 1%, #342d8a 50%) !important;
-  color: #ffffff;
-  margin: 0;
-}
+
 
 .gradient-section {
   background: linear-gradient(220deg, #A41C84 1%, #4637B8 70%);
@@ -97,18 +93,27 @@ body {
 }
 
 .home-image {
+  position: relative;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0; /* Initial state for animation */
-  animation: slideInLeft 1s forwards; /* Animation */
+  animation: slideInLeft 1s forwards, floatAnimation 3s infinite alternate; /* Animation */
+  background: url('./myimage.png');
+  
+  background-size: 98%;
+  
+
+  
 }
 
 .home-image img {
+  position: relative; /* Ensure the robot image is on top */
   max-width: 100%;
   height: auto;
 }
+
 
 @keyframes slideInLeft {
   0% {
@@ -355,3 +360,28 @@ body {
 .gradient-section{
   height:38rem !important;
 }
+
+
+/* Home.css */
+
+.like-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  gap: 5px;
+}
+
+.heart-icon {
+  font-size: 16px;
+}
+
+/* Other existing CSS styles */

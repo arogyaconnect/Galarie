@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ethers } from 'ethers';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { FaHeart } from 'react-icons/fa';
 import loaderGif from './loader.gif';
 import './Home.css';
-import backgroundImg from './imgslider2.webp';
+import backgroundImg from './bgfinal.png';
 
 const HomePage = ({ marketplace, nft }) => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const HomePage = ({ marketplace, nft }) => {
   const [items, setItems] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
+  const [likes, setLikes] = useState({});
 
   const loadMarketplaceItems = async () => {
     try {
@@ -35,20 +37,28 @@ const HomePage = ({ marketplace, nft }) => {
         const item = await marketplace.items(i);
         if (!item.sold) {
           const uri = await nft.tokenURI(item.tokenId);
-          const response = await fetch(uri);
-          const metadata = await response.json();
-          const totalPrice = await marketplace.getTotalPrice(item.itemId);
+          try {
+            const response = await fetch(uri);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const metadata = await response.json();
+            const totalPrice = await marketplace.getTotalPrice(item.itemId);
 
-          fetchedItems.push({
-            totalPrice,
-            itemId: item.itemId,
-            seller: item.seller,
-            name: metadata.name,
-            description: metadata.description,
-            image: metadata.image,
-            category: metadata.category,
-            saleType: metadata.saleType
-          });
+            fetchedItems.push({
+              totalPrice,
+              itemId: item.itemId,
+              seller: item.seller,
+              name: metadata.name,
+              description: metadata.description,
+              image: metadata.image,
+              category: metadata.category,
+              saleType: metadata.saleType
+            });
+          } catch (fetchError) {
+            console.error(`Error fetching metadata for item ${item.tokenId}:`, fetchError);
+            toast.error(`Failed to fetch metadata for item ${item.tokenId}`, { position: 'top-center' });
+          }
         }
       }
 
@@ -85,6 +95,13 @@ const HomePage = ({ marketplace, nft }) => {
     }
   };
 
+  const handleLike = (itemId) => {
+    setLikes((prevLikes) => ({
+      ...prevLikes,
+      [itemId]: (prevLikes[itemId] || 0) + 1
+    }));
+  };
+
   useEffect(() => {
     loadMarketplaceItems();
   }, [selectedFilter, sortOrder]);
@@ -100,6 +117,10 @@ const HomePage = ({ marketplace, nft }) => {
   return (
     <div>
       <div className="gradient-section">
+        <div className="gradient-sphere sphere1"></div>
+        <div className="gradient-sphere sphere2"></div>
+        <div className="gradient-sphere sphere3"></div>
+        <div className="curved-line"></div>
         <div className="home-container">
           <ToastContainer />
           <div className="home-content">
@@ -179,6 +200,10 @@ const HomePage = ({ marketplace, nft }) => {
                       </button>
                     </div>
                   </div>
+                  <button className="like-button" onClick={() => handleLike(item.itemId)}>
+                    <FaHeart className="heart-icon" />
+                    {likes[item.itemId] || 0}
+                  </button>
                 </div>
               ))}
             </div>
