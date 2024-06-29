@@ -1,7 +1,11 @@
 /* General styling for the navbar */
-.navbar {
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.custom-navbar {
+/*
+* Created with https://www.css-gradient.com
+* Gradient link: https://www.css-gradient.com/?c1=a41c84&c2=4637b8&gt=l&gd=dcr
+*/
+background: #A41C84 !important;
+background: linear-gradient(270deg, #A41C84, #4637B8) !important;    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: 'Roboto', sans-serif;
 }
 
@@ -47,8 +51,8 @@
 
 .nav-button button:hover {
     background: #ffffff;
-    color: #6e8efb;
-    border: 2px solid #6e8efb;
+    color: #667eea;
+    border: 2px solid #667eea;
 }
 
 @media (max-width: 992px) {
@@ -85,5 +89,5 @@
 
 .navbar-brand img {
     height: 45px;
-    width:150px; /* Adjust the height of the logo */
+    width: 150px; /* Adjust the height of the logo */
 }
