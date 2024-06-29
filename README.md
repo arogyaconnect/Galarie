@@ -12,6 +12,7 @@
 - Install [NodeJS](https://nodejs.org/en/), should work with any node version below 16.5.0
 - Install [Hardhat](https://hardhat.org/)
 
+
 ## Setting Up
 ### 1. Clone/Download the Repository
 
