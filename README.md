@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# NFT ART Marketplace
+# NFT Marketplace
 ## Technology Stack & Tools
 - Solidity (Writing Smart Contract)
 - Javascript (React & Testing)
