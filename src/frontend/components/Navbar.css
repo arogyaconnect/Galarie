@@ -5,7 +5,7 @@
 * Gradient link: https://www.css-gradient.com/?c1=a41c84&c2=4637b8&gt=l&gd=dcr
 */
 background: #A41C84 !important;
-background: linear-gradient(270deg, #A41C84, #4637B8) !important;    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+background: linear-gradient(270deg, #A41C84, #4637B8) !important;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -90,4 +90,12 @@ background: linear-gradient(270deg, #A41C84, #4637B8) !important;    box-shadow:
 .navbar-brand img {
     height: 45px;
     width: 150px; /* Adjust the height of the logo */
+}
+
+.wallet-button-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    background: linear-gradient(270deg, #A41C84, #4637B8) !important; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   
 }

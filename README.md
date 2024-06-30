@@ -1,8 +1,6 @@
 <<<<<<< HEAD
 # NFT Marketplace
-
 ## Technology Stack & Tools
-
 - Solidity (Writing Smart Contract)
 - Javascript (React & Testing)
 - [Ethers](https://docs.ethers.io/v5/) (Blockchain Interaction)
@@ -13,6 +11,7 @@
 ## Requirements For Initial Setup
 - Install [NodeJS](https://nodejs.org/en/), should work with any node version below 16.5.0
 - Install [Hardhat](https://hardhat.org/)
+
 
 ## Setting Up
 ### 1. Clone/Download the Repository

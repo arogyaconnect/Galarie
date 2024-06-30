@@ -1,3 +1,10 @@
+
+
+// Wallets Integration
+import { Web3OnboardProvider, init } from '@web3-onboard/react';
+import injectedModule from '@web3-onboard/injected-wallets';
+import coinbaseModule from '@web3-onboard/coinbase';
+import metamaskModule from '@web3-onboard/metamask';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from './Navbar';
@@ -14,83 +21,110 @@ import { Spinner } from 'react-bootstrap'
 
 import './App.css';
 
+const INFURA_KEY = 'cd1f481035af45bd84d3b7589667d7e9';
+const injected = injectedModule();
+const coinbase = coinbaseModule();
+const metamask = metamaskModule({
+  options: {
+    extensionOnly: false,
+    i18nOptions: {
+      enabled: true
+    },
+    dappMetadata: {
+      name: 'ART Marketplace',
+    }
+  }
+})
+
+const wallets = [injected, coinbase, metamask];
+
+const chains = [{
+  id: '0x1',
+  token: 'ETH',
+  label: 'Ethereum Mainnet',
+  rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
+}];
+
+const appMetadata = {
+  name: "Connect Wallet Example",
+  icon: "<svg>My App Icon</svg>",
+  description: "Example showcasing how to connect a wallet.",
+  recommendedInjectedWallets: [
+    { name: "MetaMask", url: "https://metamask.io" },
+    { name: "Coinbase", url: "https://wallet.coinbase.com/" }
+  ]
+};
+
+const web3Onboard = init({
+  wallets,
+  chains,
+  appMetadata
+});
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState(null);
   const [nft, setNFT] = useState({});
   const [marketplace, setMarketplace] = useState({});
+  
+  const web3Handler = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    setAccount(accounts[0]);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
 
-  useEffect(() => {
-    const checkMetaMask = async () => {
-      if (typeof window.ethereum !== 'undefined') {
-        try {
-          // Requesting access to MetaMask accounts
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          setAccount(accounts[0]);
+    window.ethereum.on('chainChanged', (chainId) => {
+      window.location.reload();
+    });
 
-          // Get provider from MetaMask
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          // Set signer
-          const signer = provider.getSigner();
-
-          // Handle MetaMask events
-          window.ethereum.on('chainChanged', () => {
-            window.location.reload();
-          });
-
-          window.ethereum.on('accountsChanged', async function (accounts) {
-            setAccount(accounts[0]);
-            await loadContracts(signer);
-          });
-
-          // Load contracts
-          await loadContracts(signer);
-        } catch (error) {
-          console.error('Error connecting MetaMask:', error);
-        }
-      } else {
-        console.warn('MetaMask extension not detected. Please install MetaMask to connect your wallet.');
-      }
-      setLoading(false);
-    };
-
-    checkMetaMask();
-  }, []);
+    window.ethereum.on('accountsChanged', async function (accounts) {
+      setAccount(accounts[0]);
+      await web3Handler();
+    });
+    loadContracts(signer);
+  };
 
   const loadContracts = async (signer) => {
-    try {
-      // Get deployed copies of contracts
-      const marketplaceContract = new ethers.Contract(MarketplaceAddress.address, MarketplaceAbi.abi, signer);
-      const nftContract = new ethers.Contract(NFTAddress.address, NFTAbi.abi, signer);
-
-      setMarketplace(marketplaceContract);
-      setNFT(nftContract);
-    } catch (error) {
-      console.error('Error loading contracts:', error);
-    }
+    const marketplace = new ethers.Contract(MarketplaceAddress.address, MarketplaceAbi.abi, signer);
+    setMarketplace(marketplace);
+    const nft = new ethers.Contract(NFTAddress.address, NFTAbi.abi, signer);
+    setNFT(nft);
+    setLoading(false);
   };
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Navigation account={account} />
-        <div>
-          {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-              <Spinner animation="border" style={{ display: 'flex' }} />
-              <p className='mx-3 my-0'>Awaiting MetaMask Connection...</p>
-            </div>
-          ) : (
-            <Routes>
-              <Route path="/" element={<Home marketplace={marketplace} nft={nft} />} />
-              <Route path="/create" element={<Create marketplace={marketplace} nft={nft} />} />
-              <Route path="/my-listed-items" element={<MyListedItems marketplace={marketplace} nft={nft} account={account} />} />
-              <Route path="/my-purchases" element={<MyPurchases marketplace={marketplace} nft={nft} account={account} />} />
-            </Routes>
-          )}
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <BrowserRouter>
+        <div className="App">
+          <>
+            <Navigation web3Handler={web3Handler} account={account} />
+          </>
+          <div>
+            {loading ? (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+                <Spinner animation="border" style={{ display: 'flex' }} />
+                <p className='mx-3 my-0'>Awaiting Wallet Connection...</p>
+              </div>
+            ) : (
+              <Routes>
+                <Route path="/" element={
+                  <Home marketplace={marketplace} nft={nft} />
+                } />
+                <Route path="/create" element={
+                  <Create marketplace={marketplace} nft={nft} />
+                } />
+                <Route path="/my-listed-items" element={
+                  <MyListedItems marketplace={marketplace} nft={nft} account={account} />
+                } />
+                <Route path="/my-purchases" element={
+                  <MyPurchases marketplace={marketplace} nft={nft} account={account} />
+                } />
+              </Routes>
+            )}
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Web3OnboardProvider>
   );
 }
 

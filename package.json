@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.16.7",
     "@chainlink/contracts": "^0.4.0",
+    "@craco/craco": "^7.1.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
@@ -25,7 +26,7 @@
     "@web3-onboard/keystone": "^2.3.10",
     "@web3-onboard/ledger": "^2.7.1",
     "@web3-onboard/magic": "^2.2.1",
-    "@web3-onboard/okx": "^2.0.0",
+    "@web3-onboard/metamask": "^2.1.2",
     "@web3-onboard/portis": "^2.2.1",
     "@web3-onboard/react": "^2.9.2",
     "@web3-onboard/sequence": "^2.1.1",
@@ -54,10 +55,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
   },
   "eslintConfig": {
     "extends": [
