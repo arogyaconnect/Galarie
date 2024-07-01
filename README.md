@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NFT Marketplace
 
 ## Technology Stack & Tools
